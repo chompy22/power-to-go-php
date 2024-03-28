@@ -13,11 +13,11 @@ class PhotoController extends BaseController
             try {
                 $photoModel = new PhotoModel();
                 $intLimit = 10;
-                //if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
-                  //  $intLimit = $arrQueryStringParams['limit'];
-               // }
-                //$arrUsers = $photoModel->getPhotos($intLimit);
-                //$responseData = json_encode($arrUsers);
+                if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
+                    $intLimit = $arrQueryStringParams['limit'];
+                }
+                $arrUsers = $photoModel->getPhotos($intLimit);
+                $responseData = json_encode($arrUsers);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
