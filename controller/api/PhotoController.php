@@ -16,8 +16,20 @@ class PhotoController extends BaseController
                 if (isset($arrQueryStringParams['limit']) && $arrQueryStringParams['limit']) {
                     $intLimit = $arrQueryStringParams['limit'];
                 }
-                $arrUsers = $photoModel->getPhotos($intLimit);
-                $responseData = json_encode($arrUsers);
+
+                $arrPhotos = $photoModel->getPhotos($intLimit);
+
+                foreach ($arrPhotos as &$photo) {
+                    $photo = [
+                        'id' => $photo['id'],
+                        'name' => $photo['name'],
+                        'description' => $photo['description'],
+                        'userLogin' => $photo['login'],
+                        'publishDate' => $photo['date']
+                    ];
+                }
+
+                $responseData = json_encode($arrPhotos);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -30,7 +42,15 @@ class PhotoController extends BaseController
         if (!$strErrorDesc) {
             $this->sendOutput(
                 $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+                array(
+                    'Content-Type: application/json',
+                    'HTTP/1.1 200 OK',
+                    "Access-Control-Allow-Origin: https://localhost:5173",
+                    "Access-Control-Allow-Methods: GET",
+                    "Access-Control-Allow-Headers: Content-Type",
+                    'Access-Control-Allow-Credentials: true',
+                    'Access-Control-Max-Age: 86400'
+                )
             );
         } else {
             $this->sendOutput(json_encode(array('error' => $strErrorDesc)),
