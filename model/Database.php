@@ -2,7 +2,8 @@
 
 class Database
 {
-    protected $connection = null;
+    protected ?mysqli $connection;
+
     public function __construct()
     {
         try {
@@ -26,10 +27,27 @@ class Database
         } catch(Exception $e) {
             throw New Exception( $e->getMessage() );
         }
+
         return false;
     }
 
-    private function executeStatement($query = "" , $params = [])
+    /*
+    public function insert($table = "" , $fields = [], $values = [])
+    {
+        $query = "INSERT INTO {$table}({$$fields}) VALUES (?, ?)";
+
+        try {
+            $stmt = $this->executeStatement( $query , $values );
+
+            $stmt->close();
+
+        } catch(Exception $e) {
+            throw New Exception( $e->getMessage() );
+        }
+    }
+    */
+
+    private function executeStatement($query = "" , $params = []): mysqli_stmt
     {
         try {
             $stmt = $this->connection->prepare( $query );
@@ -37,7 +55,7 @@ class Database
                 throw New Exception("Unable to do prepared statement: " . $query);
             }
             if( $params ) {
-                $stmt->bind_param($params[0], $params[1]);
+                $stmt->bind_param(...$params);
             }
             $stmt->execute();
             return $stmt;

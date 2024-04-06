@@ -19,16 +19,6 @@ class PhotoController extends BaseController
 
                 $arrPhotos = $photoModel->getPhotos($intLimit);
 
-                foreach ($arrPhotos as &$photo) {
-                    $photo = [
-                        'id' => $photo['id'],
-                        'name' => $photo['name'],
-                        'description' => $photo['description'],
-                        'userLogin' => $photo['login'],
-                        'publishDate' => $photo['date']
-                    ];
-                }
-
                 $responseData = json_encode($arrPhotos);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
