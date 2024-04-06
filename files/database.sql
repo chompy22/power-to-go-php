@@ -1,4 +1,4 @@
-CREATE TABLE `photo` (
+CREATE TABLE `photos` (
                          `id` int(11) NOT NULL,
                          `name` varchar(100) NOT NULL,
                          `description` varchar(500) NOT NULL,
@@ -22,7 +22,7 @@ INSERT INTO `users` (`id`, `login`, `password`, `email`, `role`, `date`) VALUES
     (4, 'elizabeth_davis', 'adminpass', 'elizabeth.davis@example.com', 'admin', '2024-03-28'),
     (5, 'james_miller', 'admin123', 'james.miller@example.com', 'admin', '2024-03-28');
 
-INSERT INTO `photo` (`id`, `name`, `description`, `userId`, `date`) VALUES
+INSERT INTO `photos` (`id`, `name`, `description`, `userId`, `date`) VALUES
                                                                         (1, 'Sunset', 'Beautiful sunset over the ocean', 1, '2024-03-28'),
                                                                         (2, 'Mountain Peak', 'View from the top of the mountain', 2, '2024-03-28'),
                                                                         (3, 'Cityscape', 'Skyline view of the city at night', 3, '2024-03-28'),

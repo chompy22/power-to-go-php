@@ -3,14 +3,14 @@ require_once PROJECT_ROOT_PATH . "/model/Database.php";
 
 const GET_PHOTOS_SQL = <<<'SQL'
 SELECT 
-    photo.id, 
-    photo.name, 
-    photo.description, 
-    photo.date AS publishDate, 
+    photos.id, 
+    photos.name, 
+    photos.description, 
+    photos.date AS publishDate, 
     users.login AS userLogin
-FROM photo
-JOIN users ON photo.userId = users.id
-ORDER BY photo.id ASC LIMIT ?
+FROM photos
+JOIN users ON photos.userId = users.id
+ORDER BY photos.id ASC LIMIT ?
 SQL;
 
 class PhotoModel extends Database
@@ -24,7 +24,7 @@ class PhotoModel extends Database
     public function addPhoto()
     {
         $fields = ['login', 'password', 'email', 'admin']
-        return $this->insert("photo", $fields, $values)
+        return $this->insert("photos", $fields, $values)
     }
     */
 }
